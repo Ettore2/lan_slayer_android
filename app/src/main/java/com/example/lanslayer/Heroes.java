@@ -3,9 +3,9 @@ package com.example.lanslayer;
 public abstract class Heroes {
     public static final int LEVEL_MULTIPLIER = 10;
     public static final int ABILITIES_X_HERO = 2;
-    public static final int ID_BARBARIAN = 0, ID_ARCHER = 1, ID_HEALER = 2, ID_MAGE = 3, ID_VALKYRIE = 4, ID_VAMPIRE = 5;
-    public static final String[] NAMES = {"Barbarian","Archer","Healer", "Mage", "Valkyrie", "Vampire"};
-    public static final int[] IMAGES_IDS = {R.drawable.barbarian,R.drawable.archer,R.drawable.healer,R.drawable.mage,R.drawable.valkyrie,R.drawable.vampire};
+    public static final int ID_BARBARIAN = 0, ID_ARCHER = 1, ID_HEALER = 2, ID_MAGE = 3, ID_VALKYRIE = 4, ID_VAMPIRE = 5, ID_DEMON = 6, ID_ELF = 7;
+    public static final String[] NAMES = {"Barbarian","Archer","Healer", "Mage", "Valkyrie", "Vampire","Demon","Elf"};
+    public static final int[] IMAGES_IDS = {R.drawable.barbarian,R.drawable.archer,R.drawable.healer,R.drawable.mage,R.drawable.valkyrie,R.drawable.vampire,R.drawable.demon,R.drawable.elf};
     public static final int DEAD_IMAGE_ID = R.drawable.skull;
     public static final int NUMBER_OF_HEROES = NAMES.length;
 
@@ -102,6 +102,10 @@ public abstract class Heroes {
                 return new Valkyrie(level);
             case ID_VAMPIRE:
                 return new Vampire(level);
+            case ID_DEMON:
+                return new Demon(level);
+            case ID_ELF:
+                return new Elf(level);
             case ID_BARBARIAN:
             default:
                 return new Barbarian(level);
@@ -349,6 +353,20 @@ public abstract class Heroes {
             super(ID_VAMPIRE, level, 710);
             abilities[0] = new Abilities.Vampire_attack(this);
             abilities[1] = new Abilities.Vampire_bite(this);
+        }
+    }
+    public static class Demon extends Heroes{
+        public Demon(int level) {
+            super(ID_DEMON, level, 930);
+            abilities[0] = new Abilities.Demon_attack(this);
+            abilities[1] = new Abilities.Demon_curse(this);
+        }
+    }
+    public static class Elf extends Heroes{
+        public Elf(int level) {
+            super(ID_ELF, level, 770);
+            abilities[0] = new Abilities.NothingAbility(this);
+            abilities[1] = new Abilities.NothingAbility(this);
         }
     }
 

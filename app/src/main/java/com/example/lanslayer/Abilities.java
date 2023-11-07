@@ -60,6 +60,21 @@ public abstract class Abilities {
     }
 
 
+    public static class NothingAbility extends Abilities{
+
+        protected NothingAbility(Heroes owner) {
+            super(owner, "nothing", TARGET_BOTH, 0);
+        }
+
+        @Override
+        public void execute(Heroes target) {
+            super.execute(target);
+        }
+        @Override
+        public String getDescriptionStart(){
+            return super.getDescriptionStart() + "nothing";
+        }
+    }
     private static abstract class AttackAbility extends Abilities{
         private final int dmg;
 
@@ -273,6 +288,40 @@ public abstract class Abilities {
         public String getDescription() {
             return super.getDescriptionStart() + " and heal " + DMG_HEAL_PERCENT + "% of the damage dealt and add " + EXTRA_DMG_TAKEN_PERCENT + " % extra damage taken tor " +
                     EXTRA_DMG_TAKEN_DURATION + " turns to him" + getDescriptionEnd();
+        }
+    }
+
+    public static class Demon_attack extends AttackAbility{
+        public static final int FIRE = 70;
+        public Demon_attack(Heroes owner){
+            super(owner, "attack", 1,20);
+        }
+
+        @Override
+        public void execute(Heroes target) {
+            super.execute(target);
+            target.addFire(FIRE, 1);
+        }
+        @Override
+        public String getDescriptionStart() {
+            return super.getDescriptionStart() + " and add " + FIRE + " fire";
+        }
+    }
+    public static class Demon_curse extends Abilities{
+        public static final int DMG_PERCENT = 33;
+        public Demon_curse(Heroes owner){
+            super(owner, "curse", TARGET_ENEMY,6);
+        }
+
+        @Override
+        public void execute(Heroes target) {
+            super.execute(target);
+            target.takeDamage(target.getMaxHealth()*DMG_PERCENT/100);
+            owner.takeDamage(owner.getMaxHealth()*DMG_PERCENT/100);
+        }
+        @Override
+        public String getDescriptionStart() {
+            return "you and the target both lose " +  DMG_PERCENT + " of the respective max health";
         }
     }
 
