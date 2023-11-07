@@ -161,16 +161,30 @@ public abstract class Abilities {
         public void execute(Heroes target){
             super.execute(target);
             target.healPercent(scaleToLevel(healPercent));
+            target.cleanseFire();
+            target.cleanseSlow();
         }
         @Override
         public String getDescriptionStart() {
-            return "heal " + scaleToLevel(healPercent) + "% of an ally's max health";
+            return "heal " + scaleToLevel(healPercent) + "% of an ally's max health, cleanse him from fire and slow";
         }
     }
 
     public static class Mage_attack extends AttackAbility{
+        public static final int fireAmount = 20;
         public Mage_attack(Heroes owner) {
-            super(owner, "attack", 1, 80);
+            super(owner, "attack", 1, 60);
+        }
+
+        @Override
+        public void execute(Heroes target) {
+            super.execute(target);
+            target.addFire(fireAmount, 1);
+        }
+
+        @Override
+        public String getDescriptionStart() {
+            return super.getDescriptionStart() + " and add " + fireAmount + " fire to him";
         }
     }
     public static class Mage_stun extends Abilities{

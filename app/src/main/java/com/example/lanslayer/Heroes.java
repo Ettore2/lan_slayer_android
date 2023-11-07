@@ -1,7 +1,5 @@
 package com.example.lanslayer;
 
-import static com.example.lanslayer.MainActivity.debug;
-
 public abstract class Heroes {
     public static final int LEVEL_MULTIPLIER = 10;
     public static final int ABILITIES_X_HERO = 2;
@@ -17,12 +15,10 @@ public abstract class Heroes {
     private final int maxHealth;
     public final Abilities[] abilities = new Abilities[ABILITIES_X_HERO];
     private int currHealth;
-    private int extraDamageDealtPercent;
-    private int extraDamageDealtDuration;
-    private int extraDamageGainedPercent;
-    private int extraDamageGainedDuration;
-    private int extraHealPercent;
-    private int extraHealDuration;
+    private int extraDamageDealtPercent, extraDamageDealtDuration;
+    private int extraDamageGainedPercent, extraDamageGainedDuration;
+    private int extraHealPercent, extraHealDuration;
+    private int fireAmount, fireDuration;
     private int slow;
 
     protected Heroes(int id, int level, int maxHealth) {
@@ -38,6 +34,8 @@ public abstract class Heroes {
         extraDamageGainedPercent = 0;
         extraHealPercent = 0;
         extraHealDuration = 0;
+        fireAmount = 0;
+        fireDuration = 0;
         slow = 0;
 
         for(int i = 0; i < this.abilities.length; i++){
@@ -82,29 +80,11 @@ public abstract class Heroes {
     public int getExtraHealPercent() {
         return extraHealPercent;
     }
-    public void addSlow(int slow) {
-        this.slow += slow;
-        if(slow < 0){
-            slow = 0;
-        }
-    }
-
-    //setters
-    public void setExtraDamageDealt(int percentage, int duration) {
-        this.extraDamageDealtPercent = percentage;
-        this.extraDamageDealtDuration = duration;
-    }
-    public void setExtraDamageGained(int percentage, int duration) {
-        this.extraDamageGainedPercent = percentage;
-        this.extraDamageGainedDuration = duration;
-    }
-    public void setExtraHeal(int percentage, int duration) {
-        this.extraHealPercent = percentage;
-        this.extraHealDuration = duration;
-    }
     public int getSlow() {
         return slow;
     }
+
+    //setters
     public void setBattleId(int battleId) {
         this.battleId = battleId;
     }
@@ -127,31 +107,86 @@ public abstract class Heroes {
                 return new Barbarian(level);
         }
     }
-    public int takeDamage(int dmg){
-
-        for(int i = 0; i < Heroes.ABILITIES_X_HERO; i++){
-            if(abilities[i].currCd > 0 && abilities[i].chargeWithHitsTaken){
-                abilities[i].currCd = abilities[i].currCd - 1;
-            }
+    public void setExtraDamageDealt(int percentage, int duration) {
+        this.extraDamageDealtPercent = percentage;
+        this.extraDamageDealtDuration = duration;
+    }
+    public void cleanseExtraDamageDealt() {
+        this.extraDamageDealtPercent = 0;
+        this.extraDamageDealtDuration = 0;
+    }
+    public void setExtraDamageGained(int percentage, int duration) {
+        this.extraDamageGainedPercent = percentage;
+        this.extraDamageGainedDuration = duration;
+    }
+    public void cleanseExtraDamageGained() {
+        this.extraDamageGainedPercent = 0;
+        this.extraDamageGainedDuration = 0;
+    }
+    public void setExtraHeal(int percentage, int duration) {
+        this.extraHealPercent = percentage;
+        this.extraHealDuration = duration;
+    }
+    public void cleanseExtraHeal() {
+        this.extraHealPercent = 0;
+        this.extraHealDuration = 0;
+    }
+    public void addFire(int amount, int duration) {
+        if(this.fireAmount < amount){
+            this.fireAmount = amount;
         }
+        this.fireDuration += duration;
+    }
+    public void cleanseFire() {
+        fireAmount = 0;
+        fireDuration = 0;
+    }
+    public void addSlow(int slow) {
+        this.slow += slow;
+        if(slow < 0){
+            slow = 0;
+        }
+    }
+    public void cleanseSlow() {
+        slow = 0;
 
-        int dmgAmount = (currHealth - dmg*(100 + extraDamageGainedPercent)/100  >= 0) ?  dmg*(100 + extraDamageGainedPercent)/100 : currHealth;
+    }
+    public int takeDamage(int dmg){
+        decreaseCdsByTakingDmg();
+
+        int dmgAmount = (currHealth - applyDmgGainMods(dmg)  >= 0) ?  applyDmgGainMods(dmg) : currHealth;
         currHealth -= dmgAmount;
         //debug("" + dmgAmount);
         return dmgAmount;
-    }
+    }//scale with effects, triggers recharge by taking damage
+    public int takeFixedDamage(int dmg){
+        decreaseCdsByTakingDmg();
+
+        int dmgAmount = (currHealth - dmg >= 0) ?  dmg : currHealth;
+        currHealth -= dmgAmount;
+        //debug("" + fixedDmgAmount);
+        return dmgAmount;
+    }//don't scale with effects, triggers recharge by taking damage
+    public int takeSpecialDamage(int dmg){
+
+        int dmgAmount = (currHealth - dmg >= 0) ?  dmg : currHealth;
+        currHealth -= dmgAmount;
+        //debug("" + dmgAmount);
+        return dmgAmount;
+    }//don't scale with effects,don't  triggers recharge by taking damage
     public int heal(int heal){
-        int healAmount = ((currHealth + (heal + heal*extraHealPercent/100)) <= maxHealth ? heal + heal*extraHealPercent/100 : maxHealth - currHealth);
+        int healAmount = ((currHealth + applyHealMods(heal)) <= maxHealth ? applyHealMods(heal) : maxHealth - currHealth);
         currHealth += healAmount;
         return healAmount;
     }
     public int healPercent(int percentHeal){
-        int healAmount =(currHealth + maxHealth*(percentHeal * (100 + extraHealPercent)/100)/100 <= maxHealth) ? maxHealth*(percentHeal * (100 + extraHealPercent)/100)/100 : maxHealth - currHealth;
+        int healAmount =(currHealth + maxHealth*applyHealMods(percentHeal)/100 <= maxHealth) ? maxHealth*applyHealMods(percentHeal)/100 : maxHealth - currHealth;
         currHealth += healAmount;
         return healAmount;
     }
     public int scaleToLevel(int val){
         return val + LEVEL_MULTIPLIER * (level - 1);
+
     }
     public int getImageId(){
         if(isAlive()){
@@ -159,9 +194,6 @@ public abstract class Heroes {
         }else{
             return DEAD_IMAGE_ID;
         }
-    }
-    public static int getImageId(int heroId){
-        return IMAGES_IDS[heroId];
     }
     public boolean isAlive(){
         return currHealth > 0;
@@ -175,6 +207,15 @@ public abstract class Heroes {
         return false;
     }
     public void decreaseStatusesByTurns(){
+        if(fireDuration > 0){
+            takeSpecialDamage(fireAmount);
+
+            fireDuration--;
+            if(fireDuration == 0){
+                fireAmount = 0;
+            }
+        }
+
         if(extraDamageDealtDuration > 0){
             extraDamageDealtDuration--;
             if(extraDamageDealtDuration == 0){
@@ -228,6 +269,9 @@ public abstract class Heroes {
         if(extraHealDuration > 0){
             s = s + "\n#" + extraHealPercent + "% extra heal gained for " + extraHealDuration;
         }
+        if(fireDuration > 0){
+            s = s + "\n#" + fireAmount + " fire for " + fireDuration;
+        }
         if(slow > 0){
             s = s +"\n# slow " + slow;
         }
@@ -242,8 +286,29 @@ public abstract class Heroes {
     }
 
 
+    //function-methods
+    public static int getImageId(int heroId){
+        return IMAGES_IDS[heroId];
+    }
+    private void decreaseCdsByTakingDmg(){
+        for(int i = 0; i < Heroes.ABILITIES_X_HERO; i++){
+            if(abilities[i].currCd > 0 && abilities[i].chargeWithHitsTaken){
+                abilities[i].currCd = abilities[i].currCd - 1;
+            }
+        }
+    }
+    private int applyDmgGainMods(int dmg){
+        return dmg*(100 + extraDamageGainedPercent)/100;
+
+    }
+    private int applyHealMods(int heal){
+        return heal*(100 + extraHealPercent)/100;
+
+    }
 
 
+
+    //sub classes
     public static class Barbarian extends Heroes{
         public Barbarian(int level) {
             super(ID_BARBARIAN, level, 980);
