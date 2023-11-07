@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:textAlignment="center"
+    tools:context=".BattleActivity">
+
+    <Button
+        android:id="@+id/btn_quit"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/button_quit"
+        android:onClick="quit"
+        android:text="@string/quit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023" />
+
+    <ImageButton
+        android:id="@+id/btn_player_hero_0"
+        android:layout_width="119dp"
+        android:layout_height="177dp"
+        android:contentDescription="@string/play_soldier_generic"
+        android:onClick="heroBtns"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.198"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.629"
+        app:srcCompat="@drawable/barbarian" />
+
+    <ImageButton
+        android:id="@+id/btn_player_hero_1"
+        android:layout_width="119dp"
+        android:layout_height="177dp"
+        android:contentDescription="@string/play_soldier_generic"
+        android:onClick="heroBtns"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.797"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.628"
+        app:srcCompat="@drawable/barbarian" />
+
+    <ProgressBar
+        android:id="@+id/pBar_player_hero_1"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="119dp"
+        android:layout_height="12dp"
+        android:progressTint="@color/design_default_color_error"
+        app:layout_constraintBottom_toTopOf="@+id/btn_player_hero_1"
+        app:layout_constraintEnd_toEndOf="@+id/btn_player_hero_1"
+        app:layout_constraintStart_toStartOf="@+id/btn_player_hero_1" />
+
+    <ProgressBar
+        android:id="@+id/pBar_player_hero_0"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="119dp"
+        android:layout_height="12dp"
+        android:progressTint="@color/design_default_color_error"
+        app:layout_constraintBottom_toTopOf="@+id/btn_player_hero_0"
+        app:layout_constraintEnd_toEndOf="@+id/btn_player_hero_0"
+        app:layout_constraintStart_toStartOf="@+id/btn_player_hero_0" />
+
+    <ImageButton
+        android:id="@+id/btn_enemy_hero_0"
+        android:layout_width="119dp"
+        android:layout_height="177dp"
+        android:contentDescription="@string/play_soldier_generic"
+        android:onClick="heroBtns"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.198"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.176"
+        app:srcCompat="@drawable/barbarian" />
+
+    <ProgressBar
+        android:id="@+id/pBar_enemy_hero_0"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="119dp"
+        android:layout_height="12dp"
+        android:progress="32"
+        android:progressTint="@color/design_default_color_error"
+        app:layout_constraintBottom_toTopOf="@+id/btn_enemy_hero_0"
+        app:layout_constraintEnd_toEndOf="@+id/btn_enemy_hero_0"
+        app:layout_constraintStart_toStartOf="@+id/btn_enemy_hero_0" />
+
+    <ProgressBar
+        android:id="@+id/pBar_enemy_hero_1"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="119dp"
+        android:layout_height="12dp"
+        android:progressTint="@color/design_default_color_error"
+        app:layout_constraintBottom_toTopOf="@+id/btn_enemy_hero_1"
+        app:layout_constraintEnd_toEndOf="@+id/btn_enemy_hero_1"
+        app:layout_constraintStart_toStartOf="@+id/btn_enemy_hero_1" />
+
+    <ImageButton
+        android:id="@+id/btn_enemy_hero_1"
+        android:layout_width="119dp"
+        android:layout_height="177dp"
+        android:contentDescription="@string/play_soldier_generic"
+        android:onClick="heroBtns"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.797"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.175"
+        app:srcCompat="@drawable/barbarian" />
+
+    <ImageView
+        android:id="@+id/img_arrow"
+        android:layout_width="119dp"
+        android:layout_height="24dp"
+        android:scaleY="-1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.198"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.441"
+        app:srcCompat="@drawable/arrow"
+        app:tint="@color/design_default_color_error" />
+
+    <Button
+        android:id="@+id/btn_ability1"
+        android:layout_width="140dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:backgroundTint="@color/selectable_button_ability"
+        android:onClick="abilityBtns"
+        android:text="@string/play_soldier_ability1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.803" />
+
+    <Button
+        android:id="@+id/btn_ability2"
+        android:layout_width="140dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="33dp"
+        android:backgroundTint="@color/selectable_button_ability"
+        android:onClick="abilityBtns"
+        android:text="@string/play_soldier_ability2"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_ability1"
+        app:layout_constraintEnd_toStartOf="@+id/btn_pass"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/btn_ability1"
+        app:layout_constraintTop_toTopOf="@+id/btn_ability1"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/btn_pass"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        android:backgroundTint="@color/selectable_button"
+        android:onClick="pass"
+        android:text="@string/pass"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.944" />
+
+    <Button
+        android:id="@+id/btn_select"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/selectable_button"
+        android:onClick="select"
+        android:text="@string/select"
+        app:layout_constraintBottom_toTopOf="@+id/btn_pass"
+        app:layout_constraintEnd_toEndOf="@+id/btn_pass"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="@+id/btn_pass" />
+
+    <TextView
+        android:id="@+id/text_descriptions"
+        android:layout_width="280dp"
+        android:layout_height="117dp"
+        android:text="@string/play_soldier_info"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="@+id/btn_ability1"
+        app:layout_constraintTop_toBottomOf="@+id/btn_ability1" />
+
+    <TextView
+        android:id="@+id/text_battle_log"
+        android:layout_width="245dp"
+        android:layout_height="46dp"
+        android:maxLines="1"
+        android:text="@string/play_soldier_battle_log"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.902"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.022" />
+
+    <TextView
+        android:id="@+id/text_battle_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/play_soldier_battle_result"
+        android:textAlignment="textStart"
+        android:textSize="60sp"
+        android:textStyle="bold|italic"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.422" />
+
+    <TextView
+        android:id="@+id/text_turns_indicator"
+        android:layout_width="70dp"
+        android:layout_height="41dp"
+        android:text="@string/play_soldier_turns_indicator"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/btn_select"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/btn_select"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.784" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

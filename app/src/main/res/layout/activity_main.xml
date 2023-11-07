@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/btn_host"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/selectable_button"
+        android:onClick="host"
+        android:text="@string/server"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.049"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.033" />
+
+    <Button
+        android:id="@+id/btn_join"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/selectable_button"
+        android:onClick="join"
+        android:text="@string/client"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.032" />
+
+    <ImageView
+        android:id="@+id/img_hero_0"
+        android:layout_width="169dp"
+        android:layout_height="311dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.066"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.602"
+        app:srcCompat="@drawable/barbarian" />
+
+    <EditText
+        android:id="@+id/text_room_code"
+        android:layout_width="326dp"
+        android:layout_height="48dp"
+        android:clickable="false"
+        android:ems="10"
+        android:enabled="true"
+        android:inputType="text"
+        android:maxLength="15"
+        android:singleLine="true"
+        android:text="@string/play_soldier_room_code"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.221" />
+
+    <ImageView
+        android:id="@+id/img_hero_1"
+        android:layout_width="169dp"
+        android:layout_height="311dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.933"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.604"
+        app:srcCompat="@drawable/barbarian" />
+
+    <TextView
+        android:id="@+id/name_Hero_1"
+        android:layout_width="169dp"
+        android:layout_height="23dp"
+        android:layout_marginBottom="1dp"
+        android:text="@string/play_soldier_hero_name"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/img_hero_1"
+        app:layout_constraintEnd_toEndOf="@+id/img_hero_1"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/img_hero_1" />
+
+    <TextView
+        android:id="@+id/name_hero_0"
+        android:layout_width="169dp"
+        android:layout_height="23dp"
+        android:text="@string/play_soldier_hero_name"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/img_hero_0"
+        app:layout_constraintEnd_toEndOf="@+id/img_hero_0"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/img_hero_0" />
+
+    <Button
+        android:id="@+id/btn_prev_sx"
+        android:layout_width="74dp"
+        android:layout_height="48dp"
+        android:backgroundTint="@color/selectable_button"
+        android:onClick="prevSxHero"
+        android:text="@string/prev_hero"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/img_hero_0"
+        app:layout_constraintTop_toBottomOf="@+id/img_hero_0"
+        app:layout_constraintVertical_bias="0.005" />
+
+    <Button
+        android:id="@+id/btn_prev_dx"
+        android:layout_width="74dp"
+        android:layout_height="48dp"
+        android:backgroundTint="@color/selectable_button"
+        android:onClick="prevDxHero"
+        android:text="@string/prev_hero"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/img_hero_1"
+        app:layout_constraintTop_toBottomOf="@+id/img_hero_1"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/btn_next_sx"
+        android:layout_width="74dp"
+        android:layout_height="48dp"
+        android:backgroundTint="@color/selectable_button"
+        android:onClick="nextSxHero"
+        android:text="@string/next_hero"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/img_hero_0"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/btn_prev_sx"
+        app:layout_constraintTop_toBottomOf="@+id/img_hero_0"
+        app:layout_constraintVertical_bias="0.005" />
+
+    <Button
+        android:id="@+id/btn_next_dx"
+        android:layout_width="74dp"
+        android:layout_height="48dp"
+        android:backgroundTint="@color/selectable_button"
+        android:onClick="nextDxHero"
+        android:text="@string/next_hero"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/img_hero_1"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/btn_prev_dx"
+        app:layout_constraintTop_toBottomOf="@+id/img_hero_1"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/text_game_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/play_soldier_game_versions"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.954"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.977" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:text="@string/room_code"
+        android:textAlignment="textStart"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/text_room_code"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

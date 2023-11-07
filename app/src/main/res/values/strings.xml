@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">lan slayer</string>
+    <string name="server">host</string>
+    <string name="client">join</string>
+    <string name="next_hero">next</string>
+    <string name="prev_hero">prev</string>
+    <string name="room_code">room code:</string>
+    <string name="play_soldier_generic">[play soldier]</string>
+    <string name="play_soldier_room_code">[room code]</string>
+    <string name="play_soldier_hero_name">[hero name]</string>
+    <string name="play_soldier_hero_status">[hero status]</string>
+    <string name="play_soldier_battle_log">[battle log]</string>
+    <string name="play_soldier_descriptions">[descriptions]</string>
+    <string name="play_soldier_ability1">[ability1]</string>
+    <string name="play_soldier_ability2">[ability2]</string>
+    <string name="play_soldier_game_versions">[game version]</string>
+    <string name="play_soldier_battle_result">[battle result]</string>
+    <string name="play_soldier_info">[info]</string>
+    <string name="play_soldier_turns_indicator">[turns indicator]</string>
+    <string name="empty" />
+    <string name="quit">quit</string>
+    <string name="select">select</string>
+    <string name="pass">pass</string>
+</resources>

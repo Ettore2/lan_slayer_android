@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="transparent">#00FFFFFF</color>
+    <color name="selectable_button_ability">#ACFFF3</color>
+    <color name="choosen_button_ability">#0DE1C8</color>
+    <color name="button_quit">#033367</color>
+    <color name="selectable_button">#0D73E1</color>
+    <color name="non_selectable_button">#7B8181</color>
+    <color name="non_selectable_button_dark">#626767</color>
+</resources>
