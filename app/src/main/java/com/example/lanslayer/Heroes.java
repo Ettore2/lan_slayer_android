@@ -364,7 +364,7 @@ public abstract class Heroes {
     }
     public static class Elf extends Heroes{
         public Elf(int level) {
-            super(ID_ELF, level, 770);
+            super(ID_ELF, level, 640);
             abilities[0] = new Abilities.NothingAbility(this);
             abilities[1] = new Abilities.NothingAbility(this);
         }

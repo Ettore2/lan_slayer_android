@@ -186,7 +186,7 @@ public abstract class Abilities {
     }
 
     public static class Mage_attack extends AttackAbility{
-        public static final int fireAmount = 20;
+        public static final int FIRE = 20;
         public Mage_attack(Heroes owner) {
             super(owner, "attack", 1, 60);
         }
@@ -194,12 +194,12 @@ public abstract class Abilities {
         @Override
         public void execute(Heroes target) {
             super.execute(target);
-            target.addFire(fireAmount, 1);
+            target.addFire(scaleToLevel(FIRE), 1);
         }
 
         @Override
         public String getDescriptionStart() {
-            return super.getDescriptionStart() + " and add " + fireAmount + " fire to him";
+            return super.getDescriptionStart() + " and add " + scaleToLevel(FIRE) + " fire to him";
         }
     }
     public static class Mage_stun extends Abilities{
@@ -300,11 +300,11 @@ public abstract class Abilities {
         @Override
         public void execute(Heroes target) {
             super.execute(target);
-            target.addFire(FIRE, 1);
+            target.addFire(scaleToLevel(FIRE), 1);
         }
         @Override
         public String getDescriptionStart() {
-            return super.getDescriptionStart() + " and add " + FIRE + " fire";
+            return super.getDescriptionStart() + " and add " + scaleToLevel(FIRE) + " fire";
         }
     }
     public static class Demon_curse extends Abilities{
