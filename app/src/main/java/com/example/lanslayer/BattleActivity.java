@@ -35,14 +35,14 @@ public class BattleActivity extends AppCompatActivity {
             while (game.playing()){
                 try {
                     //read the turn (is blocked until a turn is sent)
-                    debug("waiting for turn");
+                    //debug("waiting for turn");
                     String s = game.input.readLine();
                     //debug("read the turn: " + s);
                     turn = new Turn(s);
-                    debug("gaind turn: "+turn.toString());
+                    //debug("gained turn: "+turn.toString());
                     //execute the turn
                     game.actTurn(turn);
-                    debug(" "+game.gameState);
+                    //debug(" "+game.gameState);
 
                     //update things
                     tUpdateGraphic();

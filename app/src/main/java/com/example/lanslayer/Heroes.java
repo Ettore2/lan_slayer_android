@@ -1,11 +1,13 @@
 package com.example.lanslayer;
 
+import static com.example.lanslayer.MainActivity.debug;
+
 public abstract class Heroes {
     public static final int LEVEL_MULTIPLIER = 10;
     public static final int ABILITIES_X_HERO = 2;
-    public static final int ID_BARBARIAN = 0, ID_ARCHER = 1, ID_HEALER = 2, ID_MAGE = 3, ID_VALKYRIE = 4, ID_VAMPIRE = 5, ID_DEMON = 6, ID_ELF = 7;
-    public static final String[] NAMES = {"Barbarian","Archer","Healer", "Mage", "Valkyrie", "Vampire","Demon","Elf"};
-    public static final int[] IMAGES_IDS = {R.drawable.barbarian,R.drawable.archer,R.drawable.healer,R.drawable.mage,R.drawable.valkyrie,R.drawable.vampire,R.drawable.demon,R.drawable.elf};
+    public static final int ID_BARBARIAN = 0, ID_ARCHER = 1, ID_HEALER = 2, ID_MAGE = 3, ID_VALKYRIE = 4, ID_VAMPIRE = 5, ID_DEMON = 6, ID_ELF = 7, ID_DARK_ELF = 8;
+    public static final String[] NAMES = {"Barbarian","Archer","Healer", "Mage", "Valkyrie", "Vampire","Demon","Elf", "dark Elf"};
+    public static final int[] IMAGES_IDS = {R.drawable.barbarian,R.drawable.archer,R.drawable.healer,R.drawable.mage,R.drawable.valkyrie,R.drawable.vampire,R.drawable.demon,R.drawable.elf,R.drawable.dark_elf};
     public static final int DEAD_IMAGE_ID = R.drawable.skull;
     public static final int NUMBER_OF_HEROES = NAMES.length;
 
@@ -106,6 +108,8 @@ public abstract class Heroes {
                 return new Demon(level);
             case ID_ELF:
                 return new Elf(level);
+            case ID_DARK_ELF:
+                return new DarkElf(level);
             case ID_BARBARIAN:
             default:
                 return new Barbarian(level);
@@ -115,6 +119,12 @@ public abstract class Heroes {
         this.extraDamageDealtPercent = percentage;
         this.extraDamageDealtDuration = duration;
     }
+    public boolean haveExtraDamageDealt(){
+        if(extraDamageDealtDuration > 0){
+            return true;
+        }
+        return false;
+    }
     public void cleanseExtraDamageDealt() {
         this.extraDamageDealtPercent = 0;
         this.extraDamageDealtDuration = 0;
@@ -123,6 +133,12 @@ public abstract class Heroes {
         this.extraDamageGainedPercent = percentage;
         this.extraDamageGainedDuration = duration;
     }
+    public boolean haveExtraDamageGained(){
+        if(extraDamageGainedDuration > 0){
+            return true;
+        }
+        return false;
+    }
     public void cleanseExtraDamageGained() {
         this.extraDamageGainedPercent = 0;
         this.extraDamageGainedDuration = 0;
@@ -130,6 +146,12 @@ public abstract class Heroes {
     public void setExtraHeal(int percentage, int duration) {
         this.extraHealPercent = percentage;
         this.extraHealDuration = duration;
+    }
+    public boolean haveExtraHeal(){
+        if(extraHealDuration > 0){
+            return true;
+        }
+        return false;
     }
     public void cleanseExtraHeal() {
         this.extraHealPercent = 0;
@@ -141,6 +163,12 @@ public abstract class Heroes {
         }
         this.fireDuration += duration;
     }
+    public boolean haveFire(){
+        if(fireDuration > 0){
+            return true;
+        }
+        return false;
+    }
     public void cleanseFire() {
         fireAmount = 0;
         fireDuration = 0;
@@ -151,16 +179,40 @@ public abstract class Heroes {
             slow = 0;
         }
     }
+    public boolean haveSlow(){
+        if(slow > 0){
+            return true;
+        }
+        return false;
+    }
     public void cleanseSlow() {
         slow = 0;
 
+    }
+    public void cleanseAll() {
+        cleanseFire();
+        cleanseExtraDamageDealt();
+        cleanseExtraDamageGained();
+        cleanseExtraHeal();
+        cleanseSlow();
+
+    }
+    public int numberOfstatuses() {
+        int statuses = 0;
+        statuses += haveFire() ? 1 : 0;
+        statuses += haveExtraDamageDealt() ? 1 : 0;
+        statuses += haveExtraDamageGained() ? 1 : 0;
+        statuses += haveExtraHeal() ? 1 : 0;
+        statuses += haveSlow() ? 1 : 0;
+
+        return statuses;
     }
     public int takeDamage(int dmg){
         decreaseCdsByTakingDmg();
 
         int dmgAmount = (currHealth - applyDmgGainMods(dmg)  >= 0) ?  applyDmgGainMods(dmg) : currHealth;
         currHealth -= dmgAmount;
-        //debug("" + dmgAmount);
+        debug("" + haveExtraDamageGained() + "  " + dmgAmount);
         return dmgAmount;
     }//scale with effects, triggers recharge by taking damage
     public int takeFixedDamage(int dmg){
@@ -365,8 +417,16 @@ public abstract class Heroes {
     public static class Elf extends Heroes{
         public Elf(int level) {
             super(ID_ELF, level, 640);
-            abilities[0] = new Abilities.NothingAbility(this);
-            abilities[1] = new Abilities.NothingAbility(this);
+            abilities[0] = new Abilities.Elf_attack(this);
+            abilities[1] = new Abilities.Elf_Shield(this);
+        }
+    }
+
+    public static class DarkElf extends Heroes{
+        public DarkElf(int level) {
+            super(ID_DARK_ELF, level, 690);
+            abilities[0] = new Abilities.DarkElf_attack(this);
+            abilities[1] = new Abilities.DarkElf_Absorption(this);
         }
     }
 

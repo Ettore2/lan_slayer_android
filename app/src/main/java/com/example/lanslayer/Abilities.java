@@ -325,6 +325,72 @@ public abstract class Abilities {
         }
     }
 
+    public static class Elf_attack extends AttackAbility{
+        public static final int damageGainedPercentage = 20;
+        public static final int damageDealtPercentage = -20;
+        public static final int effectiveness = 2;
+        public Elf_attack(Heroes owner){
+            super(owner, "attack", 1,60);
+        }
+
+        @Override
+        public void execute(Heroes target) {
+            super.execute(target);
+            target.setExtraDamageGained(damageGainedPercentage, effectiveness);
+            target.setExtraDamageDealt(damageDealtPercentage, effectiveness);
+        }
+        @Override
+        public String getDescriptionStart() {
+            return super.getDescriptionStart() + ", add " + damageGainedPercentage +"% damage gained and " + damageDealtPercentage +
+                    "% damage dealt for " + effectiveness + " turns to him";
+        }
+    }
+    public static class Elf_Shield extends Abilities{
+        public static final int lessDamageGainedPercentage = -40;
+        public static final int effectiveness = 4;
+        public Elf_Shield(Heroes owner){
+            super(owner, "shield", TARGET_SELF,4);
+        }
+
+        @Override
+        public void execute(Heroes target) {
+            super.execute(target);
+            owner.setExtraDamageGained(lessDamageGainedPercentage, effectiveness);
+        }
+
+        @Override
+        public String getDescriptionStart() {
+            return super.getDescriptionStart() + "gain " + lessDamageGainedPercentage + "% damage taken for " + effectiveness + " turns";
+        }
+    }
+
+    public static class DarkElf_attack extends AttackAbility{
+        public DarkElf_attack(Heroes owner){
+            super(owner, "attack", 1,70);
+        }
+    }
+    public static class DarkElf_Absorption extends Abilities{
+        public static final int extraDamageDealtPercentage = 33;
+        public static final int turnsMultiplier = 2;
+        public DarkElf_Absorption(Heroes owner){
+            super(owner, "absorption", TARGET_BOTH,3);
+        }
+
+        @Override
+        public void execute(Heroes target) {
+            super.execute(target);
+            int statusesNumber = target.numberOfstatuses();
+            target.cleanseAll();
+            owner.setExtraDamageDealt(extraDamageDealtPercentage, turnsMultiplier * (statusesNumber - target.numberOfstatuses()));
+        }
+
+        @Override
+        public String getDescriptionStart() {
+            return super.getDescriptionStart() + "cleanse all target statuses, gai " + extraDamageDealtPercentage +
+                    " extra damage dealt for " + turnsMultiplier + " turns for every status cleansed";
+        }
+    }
+
 
 
 }
