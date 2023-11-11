@@ -57,6 +57,14 @@ public abstract class Abilities {
     }
     protected int scaleToLevel(int val){
         return owner.scaleToLevel(val);
+
+    }
+    public int applyDmgModifiers(int val){
+        return (scaleToLevel(val)) * (100 + owner.getExtraDamageDealtPercent()) / 100;
+    }
+    public int calcDmg(int dmg){
+        return applyDmgModifiers(scaleToLevel(dmg));
+
     }
 
 
@@ -83,7 +91,7 @@ public abstract class Abilities {
             this.dmg = dmg;
         }
         public int getCurrentDmg(){
-            return (scaleToLevel(dmg)) * (100 + owner.getExtraDamageDealtPercent()) / 100;
+            return calcDmg(dmg);
         }
 
         @Override
@@ -251,24 +259,27 @@ public abstract class Abilities {
         }
     }
 
-    public static class Vampire_attack extends AttackAbility{
+    public static class Vampire_attack extends Abilities{
+
+        public static final int DMG = 80;
         public static final int DMG_HEAL_PERCENT = 33;
         public Vampire_attack(Heroes owner){
-            super(owner, "attack", 1,80);
+            super(owner, "attack", TARGET_ALLAY,1);
         }
 
         @Override
         public void execute(Heroes target) {
-            currCd = cd + (owner.getSlow() > 0 ? 1 : 0);
+            super.execute(target);
             owner.decreaseCdsByDamageDealt();
-            owner.heal(target.takeDamage(getCurrentDmg())*DMG_HEAL_PERCENT/100);
+            owner.heal(target.takeDamage(applyDmgModifiers(scaleToLevel(DMG)))*DMG_HEAL_PERCENT/100);
         }
         @Override
         public String getDescriptionStart() {
             return super.getDescriptionStart() + " and heal " + DMG_HEAL_PERCENT + "% of the damage dealt";
         }
     }
-    public static class Vampire_bite extends AttackAbility{
+    public static class Vampire_bite extends Abilities{
+        public static final int DMG = 40;
         public static final int DMG_HEAL_PERCENT = 33;
         public static final int EXTRA_DMG_TAKEN_PERCENT = 100;
         public static final int EXTRA_DMG_TAKEN_DURATION = 3;
@@ -278,9 +289,9 @@ public abstract class Abilities {
 
         @Override
         public void execute(Heroes target) {
-            currCd = cd + (owner.getSlow() > 0 ? 1 : 0);
+            super.execute(target);
             owner.decreaseCdsByDamageDealt();
-            owner.heal(target.takeDamage(getCurrentDmg())*DMG_HEAL_PERCENT/100);
+            owner.heal(target.takeDamage(calcDmg(DMG))*DMG_HEAL_PERCENT/100);
             target.setExtraDamageGained(EXTRA_DMG_TAKEN_PERCENT, EXTRA_DMG_TAKEN_DURATION);
         }
 
@@ -369,10 +380,10 @@ public abstract class Abilities {
             super(owner, "attack", 1,70);
         }
     }
-    public static class DarkElf_Absorption extends Abilities{
+    public static class DarkElf_absorption extends Abilities{
         public static final int extraDamageDealtPercentage = 33;
         public static final int turnsMultiplier = 2;
-        public DarkElf_Absorption(Heroes owner){
+        public DarkElf_absorption(Heroes owner){
             super(owner, "absorption", TARGET_BOTH,3);
         }
 
@@ -388,6 +399,47 @@ public abstract class Abilities {
         public String getDescriptionStart() {
             return super.getDescriptionStart() + "cleanse all target statuses, gai " + extraDamageDealtPercentage +
                     " extra damage dealt for " + turnsMultiplier + " turns for every status cleansed";
+        }
+    }
+
+    public static class SandBandit_attack extends Abilities{
+        public static final int dmg = 70;
+        public static final int extraDamagePercentage = 33;
+        public static final int extraDamageActivationPercentage = 50;
+        public SandBandit_attack(Heroes owner){
+            super(owner, "attack", TARGET_ENEMY,1);
+        }
+
+        @Override
+        public void execute(Heroes target) {
+            super.execute(target);
+            if(target.getCurrHealthPercentage() > 50){
+                target.takeDamage(scaleToLevel(dmg));
+            }else {
+                target.takeDamage(scaleToLevel(dmg * (100 + extraDamagePercentage) / 100));
+            }
+        }
+
+        @Override
+        public String getDescriptionStart() {
+            return super.getDescriptionStart() + "deal " + scaleToLevel(dmg) + " damage to an enemy";
+        }
+    }
+    public static class SandBandit_mirage extends Abilities{
+        public SandBandit_mirage(Heroes owner){
+            super(owner, "mirage", TARGET_SELF,5);
+        }
+
+        @Override
+        public void execute(Heroes target) {
+            super.execute(target);
+            owner.heal(owner.lastReceivedPhysicalDmg);
+            owner.lastReceivedPhysicalDmg = 0;
+        }
+
+        @Override
+        public String getDescriptionStart() {
+            return super.getDescriptionStart() + "heal the last received physical damage";
         }
     }
 

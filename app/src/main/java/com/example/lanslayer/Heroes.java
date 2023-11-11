@@ -1,13 +1,15 @@
 package com.example.lanslayer;
 
-import static com.example.lanslayer.MainActivity.debug;
-
 public abstract class Heroes {
     public static final int LEVEL_MULTIPLIER = 10;
     public static final int ABILITIES_X_HERO = 2;
-    public static final int ID_BARBARIAN = 0, ID_ARCHER = 1, ID_HEALER = 2, ID_MAGE = 3, ID_VALKYRIE = 4, ID_VAMPIRE = 5, ID_DEMON = 6, ID_ELF = 7, ID_DARK_ELF = 8;
-    public static final String[] NAMES = {"Barbarian","Archer","Healer", "Mage", "Valkyrie", "Vampire","Demon","Elf", "dark Elf"};
-    public static final int[] IMAGES_IDS = {R.drawable.barbarian,R.drawable.archer,R.drawable.healer,R.drawable.mage,R.drawable.valkyrie,R.drawable.vampire,R.drawable.demon,R.drawable.elf,R.drawable.dark_elf};
+    public static final int ID_BARBARIAN = 0, ID_ARCHER = 1, ID_HEALER = 2, ID_MAGE = 3, ID_VALKYRIE = 4, ID_VAMPIRE = 5,
+            ID_DEMON = 6, ID_ELF = 7, ID_DARK_ELF = 8, ID_SAND_BANDIT = 9;
+    public static final String[] NAMES = {"Barbarian","Archer","Healer", "Mage", "Valkyrie", "Vampire",
+            "Demon","Elf", "dark Elf", "sand Bandit"};
+    public static final int[] IMAGES_IDS = {R.drawable.barbarian,R.drawable.archer,R.drawable.healer,R.drawable.mage,
+            R.drawable.valkyrie,R.drawable.vampire,R.drawable.demon,R.drawable.elf,R.drawable.dark_elf,
+            R.drawable.sand_bandit};
     public static final int DEAD_IMAGE_ID = R.drawable.skull;
     public static final int NUMBER_OF_HEROES = NAMES.length;
 
@@ -17,6 +19,7 @@ public abstract class Heroes {
     private final int maxHealth;
     public final Abilities[] abilities = new Abilities[ABILITIES_X_HERO];
     private int currHealth;
+    public int lastReceivedPhysicalDmg;
     private int extraDamageDealtPercent, extraDamageDealtDuration;
     private int extraDamageGainedPercent, extraDamageGainedDuration;
     private int extraHealPercent, extraHealDuration;
@@ -110,6 +113,8 @@ public abstract class Heroes {
                 return new Elf(level);
             case ID_DARK_ELF:
                 return new DarkElf(level);
+            case ID_SAND_BANDIT:
+                return new SandBandit(level);
             case ID_BARBARIAN:
             default:
                 return new Barbarian(level);
@@ -212,13 +217,15 @@ public abstract class Heroes {
 
         int dmgAmount = (currHealth - applyDmgGainMods(dmg)  >= 0) ?  applyDmgGainMods(dmg) : currHealth;
         currHealth -= dmgAmount;
-        debug("" + haveExtraDamageGained() + "  " + dmgAmount);
+        lastReceivedPhysicalDmg = dmgAmount;
+        //debug("" + haveExtraDamageGained() + "  " + dmgAmount);
         return dmgAmount;
     }//scale with effects, triggers recharge by taking damage
     public int takeFixedDamage(int dmg){
         decreaseCdsByTakingDmg();
 
         int dmgAmount = (currHealth - dmg >= 0) ?  dmg : currHealth;
+        lastReceivedPhysicalDmg = dmgAmount;
         currHealth -= dmgAmount;
         //debug("" + fixedDmgAmount);
         return dmgAmount;
@@ -253,6 +260,10 @@ public abstract class Heroes {
     }
     public boolean isAlive(){
         return currHealth > 0;
+
+    }
+    public float currHealthPercentage(){
+        return currHealth * 100 / maxHealth;
 
     }
     public boolean useAbility(int abilityId, Heroes target){
@@ -426,8 +437,17 @@ public abstract class Heroes {
         public DarkElf(int level) {
             super(ID_DARK_ELF, level, 690);
             abilities[0] = new Abilities.DarkElf_attack(this);
-            abilities[1] = new Abilities.DarkElf_Absorption(this);
+            abilities[1] = new Abilities.DarkElf_absorption(this);
         }
     }
+
+    public static class SandBandit extends Heroes{
+        public SandBandit(int level) {
+            super(ID_SAND_BANDIT, level, 820);
+            abilities[0] = new Abilities.SandBandit_attack(this);
+            abilities[1] = new Abilities.SandBandit_mirage(this);
+        }
+    }
+
 
 }
