@@ -236,7 +236,14 @@ public abstract class Heroes {
         currHealth -= dmgAmount;
         //debug("" + dmgAmount);
         return dmgAmount;
-    }//don't scale with effects,don't  triggers recharge by taking damage
+    }//don't scale with effects, don't  triggers recharge by taking damage
+    public int takeEtherealDamage(int dmg){
+
+        int dmgAmount = (currHealth - applyDmgGainMods(dmg)  >= 0) ?  applyDmgGainMods(dmg) : currHealth;
+        currHealth -= dmgAmount;
+        //debug("" + haveExtraDamageGained() + "  " + dmgAmount);
+        return dmgAmount;
+    }//scale with effects, don't  triggers recharge by taking damage
     public int heal(int heal){
         int healAmount = ((currHealth + applyHealMods(heal)) <= maxHealth ? applyHealMods(heal) : maxHealth - currHealth);
         currHealth += healAmount;

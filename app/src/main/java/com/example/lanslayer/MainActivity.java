@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity{
         }
     }
 
-    public static final int STATE_SELECT_HEROES = 0, STATE_HOST = 1, STATE_JOIN = 2;
+    public static final int STATE_SELECT_HEROES = 0, STATE_HOST = 1, STATE_JOIN = 2, STATE_DICTIONARY = 3;
     public static final String DEBUG_TAG = "debug";
 
 
@@ -149,6 +149,7 @@ public class MainActivity extends AppCompatActivity{
     private TextView sxHeroName, dxHeroName;
     public Button btnHost, btnJoin;
     private Button btnNextSx, btnPrevSx, btnNextDx, btnPrevDx;
+    public Button btnDictionary;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -183,6 +184,8 @@ public class MainActivity extends AppCompatActivity{
         btnPrevSx = findViewById(R.id.btn_prev_sx);
         btnNextDx = findViewById(R.id.btn_next_dx);
         btnPrevDx = findViewById(R.id.btn_prev_dx);
+
+        btnDictionary = findViewById(R.id.btn_dictionary);
 
         updateSxHero();
         updateDxHero();
@@ -322,10 +325,13 @@ public class MainActivity extends AppCompatActivity{
 
         setHeroesSelectionButtonsEnabled(stateId == STATE_SELECT_HEROES);
         btnJoin.setEnabled(stateId == STATE_SELECT_HEROES);
+        btnDictionary.setEnabled(stateId == STATE_SELECT_HEROES);
         if(stateId == STATE_SELECT_HEROES){
             btnJoin.setBackgroundColor(getResources().getColor(R.color.selectable_button,null));
+            btnDictionary.setBackgroundColor(getResources().getColor(R.color.selectable_button,null));
         }else{
             btnJoin.setBackgroundColor(getResources().getColor(R.color.non_selectable_button,null));
+            btnDictionary.setBackgroundColor(getResources().getColor(R.color.non_selectable_button,null));
         }
 
         btnHost.setText(stateId == STATE_SELECT_HEROES ? "host" : "back");
@@ -343,6 +349,29 @@ public class MainActivity extends AppCompatActivity{
             jointhread.start();
         }
 
+    }
+    public void dictionary(View view){
+        /*
+        if(stateId == STATE_SELECT_HEROES){
+            stateId = STATE_DICTIONARY;
+        }else{
+            stateId = STATE_SELECT_HEROES;
+
+        }
+        setHeroesSelectionButtonsEnabled(stateId == STATE_SELECT_HEROES);
+        btnJoin.setEnabled(stateId == STATE_SELECT_HEROES);
+        btnHost.setEnabled(stateId == STATE_SELECT_HEROES);
+        if(stateId == STATE_SELECT_HEROES){
+            btnJoin.setBackgroundColor(getResources().getColor(R.color.selectable_button,null));
+            btnHost.setBackgroundColor(getResources().getColor(R.color.selectable_button,null));
+        }else{
+            btnJoin.setBackgroundColor(getResources().getColor(R.color.non_selectable_button,null));
+            btnHost.setBackgroundColor(getResources().getColor(R.color.non_selectable_button,null));
+        }
+
+        btnDictionary.setText(stateId == STATE_SELECT_HEROES ? "dictionary" : "back");*/
+
+        startActivity(new Intent(this, DictionaryActivity.class));
     }
 
     // TODO: create a single vector of heroes to consume less ram

@@ -5,6 +5,8 @@
     <string name="next_hero">next</string>
     <string name="prev_hero">prev</string>
     <string name="room_code">room code:</string>
+    <string name="dictionary">dictionary</string>
+    <string name="back">back</string>
     <string name="play_soldier_generic">[play soldier]</string>
     <string name="play_soldier_room_code">[room code]</string>
     <string name="play_soldier_hero_name">[hero name]</string>
@@ -21,4 +23,25 @@
     <string name="quit">quit</string>
     <string name="select">select</string>
     <string name="pass">pass</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="all_status_info">
+        - GENERAL INFO:
+        \n# most statuses replace the old values if already assigned and decrease by 1 at the end of every turn.
+        \n# all dmg is "normal" (use dmg modifiers and trigger "recharge by getting hitted") if non otherwise specified.
+        \n# dc: count down; the "charge" amount steel needed to use an ability; normally decrease by 1 at the end of every turn.
+        \n# fixed damage: ignore all dmg modifiers.
+        \n# special damage: ignore all dmg modifiers, do not recharge abilities that recharge by taking dmg.
+        \n# ethereal damage: do not recharge abilities that recharge by taking dmg.
+        \n# last taken physical dmg: the last normal or fixed dmg taken.
+        \n
+        \n- EFFECTS:
+        \n# slow: is added not replaced, when slowed used abilities have +1 cd.
+        \n# fire: deal damage at the end of the turn, when adding fire take the highest damage with the sum of the duration.
+
+    </string>
+
 </resources>
