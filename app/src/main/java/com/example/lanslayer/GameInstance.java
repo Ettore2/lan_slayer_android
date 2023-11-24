@@ -16,7 +16,7 @@ public class GameInstance{
     public static final int STATE_PRE_GAME = -1, STATE_PLAYING = 0, STATE_I_WON = 1, STATE_I_LOST = 2, STATE_DAW = 3;
     public static int SERVER_TURN = 0, CLIENT_TURN = 1;
     public static final int HEROES_X_TEAM = 2;
-    public static final String GAME_VERSION = "7.0.0";//big update . balance changes / bug fix . purely graphic update
+    public static final String GAME_VERSION = "7.0.1";//(big update).(balance changes / bug fix).(purely graphic update / code cleaning)
     private static GameInstance instance = null;
 
 
